@@ -1,3 +1,6 @@
 [profile.ci]
 # Don't fail fast in CI to run the full test suite.
 fail-fast = false
+
+[profile.ci.junit]
+path = "junit.xml"
