@@ -1,7 +1,13 @@
 [package]
 name = "tokio-messaging"
+description = "Publish/subscribe functionality using Tokio channels"
 version = "0.0.1"
 edition = "2021"
+license = "GPL-3.0-or-later"
+homepage = "https://github.com/etienne-k/tokio-messaging"
+repository = "https://github.com/etienne-k/tokio-messaging"
+categories = ["asynchronous"]
+keywords = ["tokio", "async", "publish", "subscribe", "messaging"]
 
 [dependencies]
 lazy_static = "1.4"
