@@ -6,7 +6,7 @@
 </a>
 
 <a href="https://github.com/etienne-k/tokio-messaging/actions">
-<img alt="build" src="https://img.shields.io/github/workflow/status/etienne-k/tokio-messaging/tokio-messaging?style=for-the-badge&logo=github" height="20"/>
+<img alt="build" src="https://img.shields.io/github/actions/workflow/status/etienne-k/tokio-messaging/rust.yml?style=for-the-badge&logo=github" height="20"/>
 </a>
 
 <a href="https://crates.io/crates/tokio-messaging">
