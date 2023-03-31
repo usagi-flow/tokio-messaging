@@ -1,0 +1,12 @@
+pipeline:
+  tokio-messaging:
+    image: "rust:alpine"
+    commands:
+      # Required to avoid the crti.o error (https://github.com/rust-lang/rust/issues/40174)
+      - apk add --no-cache musl-dev
+      # Fetch faster
+      - mkdir -p ~/.cargo && echo -e '[registries.crates-io]\nprotocol = "sparse"' > ~/.cargo/config.toml
+
+      - cargo check
+      - cargo build
+      - cargo test --workspace
