@@ -16,12 +16,12 @@ enum MyMessage
 	Greeting,
 	Request
 }
- 
+
 impl Message for MyMessage {}
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 struct MyPayload(&'static str);
- 
+
 impl MessageData for MyPayload {}
 ```
 

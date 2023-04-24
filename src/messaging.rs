@@ -1,6 +1,6 @@
-use std::{collections::HashMap, future::Future};
-use std::sync::Arc;
-use std::sync::RwLock;
+use std::collections::HashMap;
+use std::future::Future;
+use std::sync::{Arc, RwLock};
 
 use tokio::sync::broadcast;
 
@@ -45,7 +45,8 @@ impl<M: Message, D: MessageData + 'static> Messaging<M, D>
 	/// Listen for a message from any source and invokes the specified callback for each recieved
 	/// message.
 	pub async fn on<F>(&self, message: M, mut callback: F)
-	where F: FnMut(D) -> () + Send + 'static
+	where
+		F: FnMut(D) -> () + Send + 'static
 	{
 		let tx = &self.get_channel(message).0;
 		let mut receiver = tx.subscribe();
@@ -65,8 +66,9 @@ impl<M: Message, D: MessageData + 'static> Messaging<M, D>
 	/// Listen for a message from any source and invokes the specified callback for each recieved
 	/// message.
 	pub async fn on_async<F, R>(&self, message: M, mut callback: F)
-	where F: FnMut(D) -> R + Send + 'static,
-		  R: Future<Output = ()>
+	where
+		F: FnMut(D) -> R + Send + 'static,
+		R: Future<Output = ()>
 	{
 		let mut receiver = self.get_channel(message).0.subscribe();
 

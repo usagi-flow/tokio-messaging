@@ -1,7 +1,6 @@
 extern crate tokio_messaging;
 
-use std::sync::Arc;
-use std::sync::Mutex;
+use std::sync::{Arc, Mutex};
 use std::time::Duration;
 
 use tokio::time::timeout;
@@ -56,8 +55,10 @@ async fn spsc()
 
 		// Wait a bit until the sender has sent and the callback has processed the information, then
 		// interrupt the listening after 1s
-		timeout(Duration::from_millis(1000), task).await.expect_err("The listening task is expected to time out.");
-		
+		timeout(Duration::from_millis(1000), task)
+			.await
+			.expect_err("The listening task is expected to time out.");
+
 		return result.lock().unwrap().clone();
 	});
 
@@ -88,19 +89,18 @@ async fn spmc()
 
 		// Wait a bit until the sender has sent and the callback has processed the information, then
 		// interrupt the listening after 1s
-		timeout(Duration::from_millis(1000), task).await.expect_err("The listening task is expected to time out.");
-		
+		timeout(Duration::from_millis(1000), task)
+			.await
+			.expect_err("The listening task is expected to time out.");
+
 		return result.lock().unwrap().clone();
 	};
 	let receiver_handle_a = tokio::spawn(receiver());
 	let receiver_handle_b = tokio::spawn(receiver());
 	let receiver_handle_c = tokio::spawn(receiver());
 
-	let (_, receiver_a_result, receiver_b_result, receiver_c_result) = tokio::join!(
-		sender_handle,
-		receiver_handle_a,
-		receiver_handle_b,
-		receiver_handle_c);
+	let (_, receiver_a_result, receiver_b_result, receiver_c_result) =
+		tokio::join!(sender_handle, receiver_handle_a, receiver_handle_b, receiver_handle_c);
 	let receiver_a_result = receiver_a_result.unwrap();
 	let receiver_b_result = receiver_b_result.unwrap();
 	let receiver_c_result = receiver_c_result.unwrap();
@@ -134,16 +134,14 @@ async fn mpsc()
 
 		// Wait a bit until the sender has sent and the callback has processed the information, then
 		// interrupt the listening after 1s
-		timeout(Duration::from_millis(1000), task).await.expect_err("The listening task is expected to time out.");
-		
+		timeout(Duration::from_millis(1000), task)
+			.await
+			.expect_err("The listening task is expected to time out.");
+
 		return result.lock().unwrap().clone();
 	});
 
-	let (_, _, _, receiver_result) = tokio::join!(
-		sender_handle_a,
-		sender_handle_b,
-		sender_handle_c,
-		receiver_handle);
+	let (_, _, _, receiver_result) = tokio::join!(sender_handle_a, sender_handle_b, sender_handle_c, receiver_handle);
 	let received_messages = receiver_result.unwrap();
 
 	assert_eq!(received_messages, 3);
@@ -167,7 +165,9 @@ async fn message_isolation()
 
 		// Wait a bit until the sender has sent and the callback has processed the information, then
 		// interrupt the listening after 1s
-		timeout(Duration::from_millis(1000), task).await.expect_err("The listening task is expected to time out.");
+		timeout(Duration::from_millis(1000), task)
+			.await
+			.expect_err("The listening task is expected to time out.");
 	});
 
 	let results = tokio::join!(sender_handle, receiver_handle);
